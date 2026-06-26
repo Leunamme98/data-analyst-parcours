@@ -235,3 +235,41 @@ WHERE (ville = 'Paris' OR ville = 'Dakar') AND prix > 20
 
 - **Leçon 1-3** — Agréger les données : `COUNT`, `SUM`, `AVG`, `GROUP BY`, `HAVING`
 - **Leçon 1-4** — Joindre plusieurs tables : `INNER JOIN`, `LEFT JOIN`
+
+---
+
+## Exercices
+
+> Le fichier `select_queries.sql` contient le corrigé. Essaie de résoudre les exercices par toi-même avant de le consulter.
+
+### Exercice 1 — Filtre simple (débutant)
+
+Affiche le titre et le stock de tous les livres dont le stock est **strictement inférieur à 20**, triés par stock croissant.
+
+---
+
+### Exercice 2 — LIKE et OR (débutant)
+
+Affiche le prénom et le nom des clients dont le prénom **commence par la lettre 'A' ou la lettre 'E'**.
+
+*Indice : utilise `LIKE` avec `OR`, ou `ILIKE` pour ignorer la casse.*
+
+---
+
+### Exercice 3 — Filtre sur date (intermédiaire)
+
+Affiche les titres et dates de publication de tous les livres publiés **entre le 1er janvier 1850 et le 31 décembre 1950**, triés par date de publication croissante.
+
+*Indice : utilise `BETWEEN` avec des dates au format `'AAAA-MM-JJ'`.*
+
+---
+
+### Exercice 4 — DISTINCT et exclusion (intermédiaire)
+
+Affiche les **villes distinctes** des clients, en **excluant la ville de Lomé**, triées alphabétiquement.
+
+---
+
+### Exercice 5 — Combinaison (intermédiaire)
+
+Affiche le titre et le prix des **3 livres les moins chers** dont le titre contient le mot **"la"** (insensible à la casse).

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS auteurs(
     nom TEXT NOT NULL,
     nationalite TEXT NOT NULL,
     date_naissance DATE NOT NULL
-)
+);
 
 -- Table "livres"
 CREATE TABLE IF NOT EXISTS livres(
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS livres(
     stock INT NOT NULL CHECK (stock >= 0),
     auteur_id INT,
     FOREIGN KEY (auteur_id) REFERENCES auteurs(id)
-)
+);
 
 -- Table "clients"
 CREATE TABLE IF NOT EXISTS clients(
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS clients(
     email TEXT UNIQUE NOT NULL,
     date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ville TEXT NOT NULL
-)
+);
 
 
 

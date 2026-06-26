@@ -152,7 +152,7 @@ lecon-1-1 → lecon-1-2 → lecon-1-3 → ...
 | 1-2   | SELECT, WHERE, ORDER BY, LIMIT | ✅ Terminé  |
 | 1-3   | Agrégations et GROUP BY        | ✅ Terminé  |
 | 1-4   | Jointures                      | ✅ Terminé  |
-| 1-5   | Sous-requêtes et CTEs          | 📋 À venir  |
+| 1-5   | Sous-requêtes et CTEs          | ✅ Terminé  |
 | 1-6   | Fonctions window               | 📋 À venir  |
 
 ### Module 2 — Python · Module 3 — Power BI · Module 4 — Projets

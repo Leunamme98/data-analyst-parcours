@@ -345,3 +345,49 @@ HAVING COUNT(id) = (
 - **Leçon 1-4** — Jointures : relier `livres` et `auteurs` pour afficher les noms au lieu des IDs
 - **Leçon 1-5** — Sous-requêtes et CTEs : réécrire les requêtes imbriquées de façon lisible
 - **Leçon 1-6** — Fonctions window : `RANK()`, `ROW_NUMBER()`, `SUM() OVER()` pour des agrégations sans GROUP BY
+
+---
+
+## Exercices
+
+> Le fichier `aggregations.sql` contient le corrigé. Essaie de résoudre les exercices par toi-même avant de le consulter.
+
+### Exercice 1 — Agrégations simples (débutant)
+
+Affiche en une seule requête :
+- Le **nombre total de livres** dans la base
+- Le **stock total** de tous les livres
+- Le **prix minimum** et le **prix maximum**
+
+---
+
+### Exercice 2 — GROUP BY (débutant)
+
+Affiche le **nombre de clients par ville**, trié par nombre décroissant.
+
+---
+
+### Exercice 3 — HAVING (intermédiaire)
+
+Affiche les **auteur_id** dont la **différence entre le livre le plus cher et le moins cher** (amplitude de prix) est **supérieure à 10€**. Trie par amplitude décroissante.
+
+*Indice : amplitude = `MAX(prix) - MIN(prix)`*
+
+---
+
+### Exercice 4 — CASE WHEN + GROUP BY (intermédiaire)
+
+Répartis les livres en trois tranches de prix :
+- `'petit budget'` : prix ≤ 13€
+- `'milieu de gamme'` : entre 13€ et 20€ (bornes incluses)
+- `'premium'` : prix > 20€
+
+Affiche chaque tranche avec le **nombre de livres** et le **stock total**. Trie par nombre de livres décroissant.
+
+---
+
+### Exercice 5 — Combinaison avancée (avancé)
+
+Affiche les **auteur_id** dont le **prix moyen de leurs livres** est **supérieur à la moyenne globale** de tous les livres. Affiche aussi leur prix moyen, trié du plus élevé au plus bas.
+
+*Indice : calcule la moyenne globale avec une sous-requête scalaire dans HAVING, ou mémorise-la.*

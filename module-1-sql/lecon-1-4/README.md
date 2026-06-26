@@ -337,3 +337,46 @@ LIMIT 3;
 
 - **Leçon 1-5** — Sous-requêtes et CTEs : réécrire des jointures complexes de façon plus lisible
 - **Leçon 1-6** — Fonctions window : `RANK()`, `DENSE_RANK()`, `ROW_NUMBER()` par groupe
+
+---
+
+## Exercices
+
+> Le fichier `jointures.sql` contient le corrigé. Essaie de résoudre les exercices par toi-même avant de le consulter.
+
+### Exercice 1 — INNER JOIN + WHERE (débutant)
+
+Affiche le **titre**, le **prix** et le **nom complet de l'auteur** (prénom + ' ' + nom) pour tous les livres dont le prix est **supérieur à 20€**, triés par prix décroissant.
+
+*Indice : concaténer deux colonnes texte : `a.prenom || ' ' || a.nom`*
+
+---
+
+### Exercice 2 — JOIN + GROUP BY (débutant)
+
+Affiche le **nombre de livres par nationalité d'auteur**, trié par nombre décroissant.
+
+---
+
+### Exercice 3 — JOIN + CASE WHEN (intermédiaire)
+
+Affiche tous les livres avec leur auteur et une colonne `categorie_prix` :
+- `'économique'` si prix < 14€
+- `'standard'` si prix entre 14€ et 20€ (bornes incluses)
+- `'premium'` si prix > 20€
+
+Trie par catégorie alphabétiquement, puis par prix croissant dans chaque catégorie.
+
+---
+
+### Exercice 4 — LEFT JOIN + HAVING (intermédiaire)
+
+Affiche le **nom et prénom de chaque auteur** avec le **stock total de ses livres**, uniquement pour les auteurs dont le stock total est **supérieur à 150**. Trie par stock décroissant.
+
+---
+
+### Exercice 5 — JOIN + sous-agrégation (avancé)
+
+Affiche le **titre et le prix du livre le plus cher** de chaque auteur, ainsi que le **nom de l'auteur**.
+
+*Indice : utilise `MAX(prix)` avec `GROUP BY` et une jointure sur auteurs.*
