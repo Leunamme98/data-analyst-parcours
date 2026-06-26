@@ -7,7 +7,7 @@
 
 ## À propos de moi
 
-Je suis **Apedo Kossi Emmanuel**, Ingénieur en Conception Informatique (Bac+5, Génie Logiciel & Systèmes d'Information — IAI Gabon), Data Analyst et enseignant en Mathématiques & Informatique, basé à Libreville, Gabon.
+Je suis **Emmanuel Kossi APEDO**, Ingénieur en Conception Informatique (Bac+5, Génie Logiciel & Systèmes d'Information — IAI Gabon), Data Analyst et enseignant en Mathématiques & Informatique, basé à Libreville, Gabon.
 
 Mon parcours est atypique : **8 ans d'enseignement** (secondaire et supérieur) combinés à une **expertise technique en développement fullstack et analyse de données**. Cette double compétence m'a amené à approcher la data non seulement comme un praticien, mais aussi comme un pédagogue — d'où ce dépôt.
 
