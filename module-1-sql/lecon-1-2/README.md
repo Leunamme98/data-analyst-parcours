@@ -6,40 +6,51 @@
 - Trier les résultats avec `ORDER BY`
 - Limiter le nombre de résultats avec `LIMIT`
 - Filtrer les lignes avec `WHERE` et ses opérateurs
+- Éliminer les doublons avec `DISTINCT`
 - Combiner plusieurs clauses dans une même requête
+
+---
+
+## L'ordre d'exécution SQL — à connaître absolument
+
+L'ordre dans lequel on **écrit** les clauses est différent de l'ordre dans lequel SQL les **exécute**. Comprendre cet ordre est fondamental pour éviter les erreurs.
+
+```
+Ordre d'écriture :    SELECT → FROM → WHERE → ORDER BY → LIMIT
+Ordre d'exécution :   FROM → WHERE → SELECT → ORDER BY → LIMIT
+```
+
+**Conséquence pratique :** on ne peut pas utiliser dans `WHERE` un alias défini dans `SELECT`, car `WHERE` est évalué avant `SELECT`.
+
+```sql
+-- ERREUR : prix_ttc n'existe pas encore au moment où WHERE est évalué
+SELECT prix * 1.2 AS prix_ttc
+FROM livres
+WHERE prix_ttc > 20;  -- ← invalide
+
+-- CORRECT
+SELECT prix * 1.2 AS prix_ttc
+FROM livres
+WHERE prix * 1.2 > 20;  -- ← répéter l'expression
+```
 
 ---
 
 ## Clauses couvertes
 
-| Clause       | Rôle                                                          |
-|--------------|---------------------------------------------------------------|
-| `SELECT`     | Choisit les colonnes à afficher                               |
-| `FROM`       | Désigne la table source                                       |
-| `WHERE`      | Filtre les lignes selon une condition                         |
-| `ORDER BY`   | Trie les résultats (`ASC` croissant, `DESC` décroissant)      |
-| `LIMIT`      | Limite le nombre de lignes retournées                         |
-| `DISTINCT`   | Supprime les doublons dans les résultats                      |
-| `BETWEEN`    | Filtre une valeur dans un intervalle (bornes incluses)        |
-| `LIKE`       | Recherche un motif dans une chaîne de caractères              |
-| `UPPER()`    | Convertit une chaîne en majuscules                            |
-| `EXTRACT()`  | Extrait une partie d'une date (année, mois, jour…)            |
-
----
-
-## Ordre d'exécution SQL
-
-L'ordre dans lequel SQL évalue les clauses est différent de l'ordre dans lequel on les écrit :
-
-```
-1. FROM       → quelle table ?
-2. WHERE      → quelles lignes ?
-3. SELECT     → quelles colonnes ?
-4. ORDER BY   → dans quel ordre ?
-5. LIMIT      → combien de lignes ?
-```
-
-Comprendre cet ordre explique pourquoi on ne peut pas filtrer avec `WHERE` sur un alias défini dans `SELECT`.
+| Clause     | Rôle                                                         |
+|------------|--------------------------------------------------------------|
+| `SELECT`   | Choisit les colonnes à afficher                              |
+| `FROM`     | Désigne la table source                                      |
+| `WHERE`    | Filtre les lignes selon une condition                        |
+| `ORDER BY` | Trie les résultats (`ASC` croissant, `DESC` décroissant)     |
+| `LIMIT`    | Limite le nombre de lignes retournées                        |
+| `DISTINCT` | Supprime les doublons dans les résultats                     |
+| `BETWEEN`  | Filtre une valeur dans un intervalle (bornes incluses)       |
+| `LIKE`     | Recherche un motif dans une chaîne de caractères             |
+| `IN`       | Vérifie si une valeur appartient à une liste                 |
+| `UPPER()`  | Convertit une chaîne en majuscules                           |
+| `EXTRACT()`| Extrait une partie d'une date (année, mois, jour…)           |
 
 ---
 
@@ -49,12 +60,14 @@ Comprendre cet ordre explique pourquoi on ne peut pas filtrer avec `WHERE` sur u
 
 ```sql
 -- Titre et prix de tous les livres
+-- Toujours préférer nommer les colonnes plutôt que SELECT * en production
 SELECT titre, prix
 FROM livres;
 ```
 
 ```sql
 -- Clients triés par nom alphabétiquement
+-- ASC = A → Z (défaut), DESC = Z → A
 SELECT prenom, nom
 FROM clients
 ORDER BY nom ASC;
@@ -62,6 +75,7 @@ ORDER BY nom ASC;
 
 ```sql
 -- Les 5 livres les plus chers
+-- ORDER BY avant LIMIT : on trie d'abord, puis on coupe
 SELECT titre, prix
 FROM livres
 ORDER BY prix DESC
@@ -80,7 +94,7 @@ WHERE prix > 20;
 ```
 
 ```sql
--- Clients habitant à Dakar (insensible à la casse)
+-- Clients habitant à Dakar (insensible à la casse grâce à UPPER)
 SELECT prenom, nom, ville
 FROM clients
 WHERE UPPER(ville) = 'DAKAR';
@@ -93,12 +107,17 @@ FROM livres
 WHERE EXTRACT(YEAR FROM date_publication) < 1900;
 ```
 
+> **Remarque performance :** `EXTRACT()` sur une colonne empêche l'utilisation d'un index.  
+> Sur un grand dataset, préférer : `WHERE date_publication < '1900-01-01'`
+
 ```sql
--- Livres dont le titre contient 'et'
+-- Livres dont le titre contient le mot 'et'
 SELECT titre
 FROM livres
 WHERE UPPER(titre) LIKE '%ET%';
 ```
+
+> **Remarque LIKE :** `'%ET%'` capture tout titre contenant "ET" n'importe où, y compris à l'intérieur d'autres mots ("Malentendu", "Nuit"...). Pour cibler le mot isolé : `LIKE '% et %'` (avec des espaces autour).
 
 ---
 
@@ -106,6 +125,7 @@ WHERE UPPER(titre) LIKE '%ET%';
 
 ```sql
 -- Livres avec stock entre 20 et 40, triés par stock décroissant
+-- BETWEEN x AND y équivaut à col >= x AND col <= y (bornes incluses)
 SELECT titre, stock
 FROM livres
 WHERE stock BETWEEN 20 AND 40
@@ -113,7 +133,7 @@ ORDER BY stock DESC;
 ```
 
 ```sql
--- Villes distinctes des clients
+-- Villes distinctes des clients (sans doublons)
 SELECT DISTINCT ville
 FROM clients;
 ```
@@ -129,63 +149,89 @@ LIMIT 3;
 
 ---
 
-## Remarques importantes
+## Tous les opérateurs disponibles dans WHERE
 
-### 1 — LIKE '%ET%' capte plus large que prévu
+### Opérateurs de comparaison
 
-Le motif `'%ET%'` capture **tout titre contenant "ET" n'importe où**, y compris à l'intérieur d'autres mots :
+| Opérateur  | Signification       | Exemple                     |
+|------------|---------------------|-----------------------------|
+| `=`        | Égal                | `WHERE ville = 'Paris'`     |
+| `<>` / `!=`| Différent           | `WHERE ville <> 'Paris'`    |
+| `>`        | Supérieur           | `WHERE prix > 20`           |
+| `<`        | Inférieur           | `WHERE prix < 10`           |
+| `>=`       | Supérieur ou égal   | `WHERE stock >= 30`         |
+| `<=`       | Inférieur ou égal   | `WHERE stock <= 50`         |
 
-| Titre retourné        | Pourquoi capté            |
-|-----------------------|---------------------------|
-| Roméo **et** Juliette | mot "et" isolé ✓          |
-| Juli**ette**          | "ET" à l'intérieur du mot |
-| Son**ate**            | "ATE" contient "AT"... non, mais "Son**ate**" contient "ate" |
-| Mal**ent**endu        | "ENT" contient "ET"       |
+### Opérateurs de plage et de liste
 
-Ce n'est pas une erreur ici, c'est le comportement attendu de `LIKE`. Dans un cas réel, pour cibler le mot "et" **isolé**, on affinerait avec des espaces :
+| Opérateur            | Description                          | Exemple                                    |
+|----------------------|--------------------------------------|--------------------------------------------|
+| `BETWEEN x AND y`   | Dans l'intervalle [x, y]             | `WHERE stock BETWEEN 20 AND 40`            |
+| `IN (a, b, c)`      | Parmi une liste de valeurs           | `WHERE ville IN ('Paris', 'Dakar', 'Lome')`|
+| `NOT IN (a, b, c)`  | Absent d'une liste                   | `WHERE ville NOT IN ('Paris')`             |
+
+### Opérateurs de texte
+
+| Opérateur        | Description                             | Exemple                            |
+|------------------|-----------------------------------------|------------------------------------|
+| `LIKE 'motif'`   | Correspond au motif (sensible casse)    | `WHERE titre LIKE 'Les%'`          |
+| `ILIKE 'motif'`  | Correspond au motif (insensible casse)  | `WHERE titre ILIKE '%et%'`         |
+| `NOT LIKE`       | Ne correspond pas au motif              | `WHERE titre NOT LIKE '%et%'`      |
+
+**Caractères spéciaux de LIKE :**
+- `%` → remplace n'importe quelle suite de caractères (y compris vide)
+- `_` → remplace exactement un caractère
 
 ```sql
-WHERE LOWER(titre) LIKE '% et %'
+WHERE titre LIKE 'Les%'    -- commence par "Les"
+WHERE titre LIKE '%Paris'  -- se termine par "Paris"
+WHERE titre LIKE '%et%'    -- contient "et" n'importe où
+WHERE nom   LIKE 'H___'    -- commence par H suivi d'exactement 3 caractères
 ```
 
-Cela exige un espace avant et après, ce qui limite les faux positifs. La contrepartie : les titres qui commencent ou se terminent par "et" seraient ratés.
+### Opérateurs de valeur nulle
+
+| Opérateur      | Description               | Exemple                          |
+|----------------|---------------------------|----------------------------------|
+| `IS NULL`      | La valeur est absente     | `WHERE auteur_id IS NULL`        |
+| `IS NOT NULL`  | La valeur est présente    | `WHERE auteur_id IS NOT NULL`    |
+
+> Attention : `WHERE auteur_id = NULL` ne fonctionne **pas**. Il faut toujours utiliser `IS NULL`.
+
+### Opérateurs logiques
+
+| Opérateur | Description                              | Exemple                                      |
+|-----------|------------------------------------------|----------------------------------------------|
+| `AND`     | Les deux conditions doivent être vraies  | `WHERE prix > 15 AND stock > 30`             |
+| `OR`      | Au moins une condition doit être vraie   | `WHERE ville = 'Paris' OR ville = 'Dakar'`   |
+| `NOT`     | Inverse la condition                     | `WHERE NOT ville = 'Paris'`                  |
+
+**Priorité des opérateurs :** `NOT` > `AND` > `OR`. Utiliser des parenthèses pour lever toute ambiguïté.
+
+```sql
+-- Sans parenthèses : ambigu
+WHERE ville = 'Paris' OR ville = 'Dakar' AND prix > 20
+
+-- Avec parenthèses : clair
+WHERE (ville = 'Paris' OR ville = 'Dakar') AND prix > 20
+```
 
 ---
 
-### 2 — EXTRACT vs comparaison directe de date
+## Fonctions utiles dans SELECT
 
-Les deux requêtes suivantes donnent le même résultat :
-
-```sql
--- Avec EXTRACT (notre solution)
-WHERE EXTRACT(YEAR FROM date_publication) < 1900
-
--- Avec comparaison directe (recommandé sur grands datasets)
-WHERE date_publication < '1900-01-01'
-```
-
-**Pourquoi préférer la comparaison directe ?**
-
-Appliquer une fonction sur une colonne (`EXTRACT`, `UPPER`, `LOWER`…) empêche PostgreSQL d'utiliser les **index** sur cette colonne. Sans index, la base doit scanner toutes les lignes une par une.
-
-Sur `librairiedb` avec 50 lignes, la différence est nulle. Sur une table de 10 millions de lignes, cela peut faire passer une requête de quelques millisecondes à plusieurs secondes.
-
-> Règle : éviter les fonctions sur les colonnes dans `WHERE` quand une alternative directe existe.
+| Fonction         | Description                              | Exemple                          |
+|------------------|------------------------------------------|----------------------------------|
+| `UPPER(col)`     | Convertit en majuscules                  | `UPPER('paris')` → `'PARIS'`    |
+| `LOWER(col)`     | Convertit en minuscules                  | `LOWER('PARIS')` → `'paris'`    |
+| `LENGTH(col)`    | Nombre de caractères                     | `LENGTH('Hamlet')` → `6`        |
+| `TRIM(col)`      | Supprime les espaces en début/fin        | `TRIM('  hello  ')` → `'hello'` |
+| `EXTRACT(p FROM col)` | Extrait une partie de date        | `EXTRACT(YEAR FROM date_publication)` |
+| `col1 \|\| col2` | Concaténation de chaînes                | `prenom \|\| ' ' \|\| nom`       |
 
 ---
 
-## Opérateurs de comparaison disponibles dans WHERE
+## Pour aller plus loin
 
-| Opérateur       | Signification              | Exemple                          |
-|-----------------|----------------------------|----------------------------------|
-| `=`             | Égal                       | `WHERE ville = 'Paris'`          |
-| `<>` ou `!=`   | Différent                  | `WHERE ville <> 'Paris'`         |
-| `>`             | Supérieur                  | `WHERE prix > 20`                |
-| `<`             | Inférieur                  | `WHERE prix < 10`                |
-| `>=`            | Supérieur ou égal          | `WHERE stock >= 30`              |
-| `<=`            | Inférieur ou égal          | `WHERE stock <= 50`              |
-| `BETWEEN x AND y` | Dans l'intervalle [x, y] | `WHERE stock BETWEEN 20 AND 40`  |
-| `LIKE '%motif%'`| Contient le motif          | `WHERE titre LIKE '%et%'`        |
-| `IN (a, b, c)`  | Parmi une liste de valeurs | `WHERE ville IN ('Paris','Dakar')` |
-| `IS NULL`       | Valeur absente             | `WHERE auteur_id IS NULL`        |
-| `IS NOT NULL`   | Valeur présente            | `WHERE auteur_id IS NOT NULL`    |
+- **Leçon 1-3** — Agréger les données : `COUNT`, `SUM`, `AVG`, `GROUP BY`, `HAVING`
+- **Leçon 1-4** — Joindre plusieurs tables : `INNER JOIN`, `LEFT JOIN`
