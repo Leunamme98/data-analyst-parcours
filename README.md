@@ -92,7 +92,7 @@ data-analyst-parcours/
 │   ├── lecon-1-1/              ✅ Création de base de données (DDL + INSERT)
 │   ├── lecon-1-2/              ✅ Interroger et filtrer (SELECT, WHERE, ORDER BY)
 │   ├── lecon-1-3/              ✅ Agrégations (COUNT, SUM, AVG, GROUP BY, HAVING)
-│   ├── lecon-1-4/              🔄 Jointures (INNER JOIN, LEFT JOIN, etc.)
+│   ├── lecon-1-4/              ✅ Jointures (INNER JOIN, LEFT JOIN, etc.)
 │   ├── lecon-1-5/              📋 Sous-requêtes et CTEs
 │   └── lecon-1-6/              📋 Fonctions window (RANK, ROW_NUMBER, etc.)
 │
@@ -151,7 +151,7 @@ lecon-1-1 → lecon-1-2 → lecon-1-3 → ...
 | 1-1   | Création de base de données    | ✅ Terminé  |
 | 1-2   | SELECT, WHERE, ORDER BY, LIMIT | ✅ Terminé  |
 | 1-3   | Agrégations et GROUP BY        | ✅ Terminé  |
-| 1-4   | Jointures                      | 🔄 En cours |
+| 1-4   | Jointures                      | ✅ Terminé  |
 | 1-5   | Sous-requêtes et CTEs          | 📋 À venir  |
 | 1-6   | Fonctions window               | 📋 À venir  |
 
