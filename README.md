@@ -7,42 +7,13 @@
 
 ## À propos de moi
 
-Je suis **Emmanuel Kossi APEDO**, Ingénieur en Conception Informatique (Bac+5, Génie Logiciel & Systèmes d'Information — IAI Gabon), Data Analyst et enseignant en Mathématiques & Informatique, basé à Libreville, Gabon.
+**Apedo Kossi Emmanuel** — Ingénieur en Conception Informatique (Bac+5, IAI Gabon), Data Analyst, certifié Google Data Analytics.
 
-Mon parcours est atypique : **8 ans d'enseignement** (secondaire et supérieur) combinés à une **expertise technique en développement fullstack et analyse de données**. Cette double compétence m'a amené à approcher la data non seulement comme un praticien, mais aussi comme un pédagogue — d'où ce dépôt.
+Expérience en analyse de données télécom chez **Huawei Technologies Gabon** (PostgreSQL, SQL avancé, segmentation clients, reporting automatisé) et en développement fullstack (Spring Boot, Angular, Docker). Plus de 8 ans d'expérience en enseignement — ce qui m'amène à aborder la data autant comme praticien que comme pédagogue.
 
-### Ce que j'ai fait concrètement
-
-Dans le cadre de mon stage de fin d'études chez **Huawei Technologies Gabon** (équipe Customer Experience Management), j'ai :
-
-- Analysé des données réseau et Mobile Money pour **Gabon Télécom** et **Moov Africa** — résolution de plaintes, identification de causes racines, segmentation clients (Silent Users)
-- Développé et déployé **3 plateformes décisionnelles en production** :
-  - **Agent Daily Tracking** — suivi quotidien de liquidité des agents Moov Money, détection d'anomalies automatisée (Spring Boot + Angular + Docker + PostgreSQL) — retenu comme mémoire de fin d'études et candidat au concours FOCAC China-Africa AI Contest
-  - **Bundle Care** — pilotage KPI des offres Bundle de Gabon Télécom (revenus, souscriptions, utilisateurs actifs)
-  - **VIPCARE** — dashboard temps réel de surveillance des pannes réseau pour la clientèle VIP
-- Produit des **rapports analytiques automatisés** via SQL complexe sur PostgreSQL et CarbonData/Hive (grandes volumétries)
-
-### Compétences techniques
-
-| Domaine         | Technologies                                                              |
-|-----------------|---------------------------------------------------------------------------|
-| Data & Analyse  | Python (Pandas, NumPy), SQL avancé (PostgreSQL, MySQL, Hive), Power BI  |
-| Développement   | Java / Spring Boot, Angular (v21), TypeScript, API REST, Docker          |
-| Méthodes        | MERISE/UML, méthodes agiles, analyse de besoins, documentation technique |
-| Langues         | Français (maternelle), Ewé (maternelle), Anglais (professionnel)         |
-
-### Certifications
-
-- Google Data Analytics — Coursera, 2025
-- Java Developer — Udemy, 2024
-- Spring Boot & Angular — Udemy, 2024
-- Python Programming — Udemy, 2024
-
-### Me contacter
-
-- Email : apedokossiemmanuel@gmail.com
 - LinkedIn : [linkedin.com/in/ApedoKossiEmmanuel](https://linkedin.com/in/ApedoKossiEmmanuel)
 - GitHub : [github.com/Leunamme98](https://github.com/Leunamme98)
+- Email : apedokossiemmanuel@gmail.com
 
 ---
 
