@@ -68,11 +68,12 @@ data-analyst-parcours/
 │   ├── lecon-1-6/              ✅ Fonctions window (RANK, ROW_NUMBER, etc.)
 │   └── lecon-1-7-projet/       ✅ Projet — Analyse complète librairiedb (20 requêtes)
 │
-├── module-2-python/            📋 Analyse de données avec Python
-│   ├── lecon-2-1/              Pandas — chargement et exploration
-│   ├── lecon-2-2/              Nettoyage et transformation
-│   ├── lecon-2-3/              Visualisation (matplotlib, seaborn)
-│   └── lecon-2-4/              Projet d'analyse complet
+├── module-2-python/            🔄 Analyse de données avec Python
+│   ├── lecon-2-1/              ✅ Environnement : venv, Jupyter, pandas, numpy...
+│   ├── lecon-2-2/              📋 Pandas : chargement et exploration
+│   ├── lecon-2-3/              📋 Nettoyage et transformation
+│   ├── lecon-2-4/              📋 Visualisation (matplotlib, seaborn)
+│   └── lecon-2-5-projet/       📋 Projet d'analyse complet
 │
 ├── module-3-powerbi/           📋 Tableaux de bord avec Power BI
 │   ├── lecon-3-1/              Connexion aux données et modèle
@@ -128,9 +129,18 @@ lecon-1-1 → lecon-1-2 → lecon-1-3 → ...
 | 1-6   | Fonctions window               | ✅ Terminé  |
 | 1-7   | Projet — Analyse librairiedb   | ✅ Terminé  |
 
-### Module 2 — Python · Module 3 — Power BI · Module 4 — Projets
+### Module 2 — Python
 
-> En cours de construction — à venir prochainement.
+| Leçon | Sujet                          | Statut      |
+|-------|--------------------------------|-------------|
+| 2-1   | Environnement (venv, Jupyter)  | ✅ Terminé  |
+| 2-2   | Pandas — exploration           | 📋 À venir  |
+| 2-3   | Nettoyage et transformation    | 📋 À venir  |
+| 2-4   | Visualisation                  | 📋 À venir  |
+
+### Module 3 — Power BI · Module 4 — Projets
+
+> À venir.
 
 ---
 
